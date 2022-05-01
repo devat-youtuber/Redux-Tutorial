@@ -4,7 +4,7 @@
 
 ## Author: Dev A.T Viet Nam
 
-## Youtube: https://youtu.be/iruPZcpUxPs
+## Youtube: https://youtu.be/rYHYPW6EofI
 
 ## Getting started: 
   React: `npm start`    
@@ -52,7 +52,7 @@ II. What will we learn?
     - Một Action là một plain JavaScript object có một thuộc tính `type`. Bạn có thể coi một action là một sự kiện mô tả điều gì đó đã xảy ra trong ứng dụng.     
 
   5. View?   
-    - Render UI based on current State, get changes from store to render.
+    - Render UI based on current State, get changes from store to render.        
     - Hiển thị giao diện người dùng dựa trên State hiện tại, lấy các thay đổi từ store để hiển thị.    
 
   6. Data Flow.
