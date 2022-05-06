@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import * as userAPI from './api/userAPI'
 import Card from './components/Card';
 import Spinner from './components/Spinner';
 import UserInput from './components/UserInput';
+import { getUsers } from './redux/thunks/userThunk';
 
 function App() {
   const [editUser, setEditUser] = useState()
@@ -16,15 +16,8 @@ function App() {
 
 
   useEffect(() => {
-    dispatch({type: `users/fetch_request`})
-
-    userAPI.getUsers()
-    .then(data => {
-      dispatch({ type: 'users/fetch_success', payload: data })
-    })
-    .catch(err => {
-      dispatch({ type: 'users/fetch_error', payload: err })
-    })
+    // getUsers(dispatch)
+    dispatch(getUsers('123'))
   }, [dispatch])
 
 

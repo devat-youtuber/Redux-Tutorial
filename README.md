@@ -4,7 +4,7 @@
 
 ## Author: Dev A.T Viet Nam
 
-## Youtube: https://youtu.be/rYHYPW6EofI
+## Youtube: https://youtu.be/Rth_wD7-tTo
 
 ## Getting started: 
   React: `npm start`    

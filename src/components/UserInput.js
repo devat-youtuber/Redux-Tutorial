@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import * as userAPI from '../api/userAPI'
+import { updateUser, createUser } from '../redux/thunks/userThunk'
 
 
 const UserInput = ({editUser, setEditUser}) => {
@@ -22,25 +22,9 @@ const UserInput = ({editUser, setEditUser}) => {
     const createdAt = new Date().toISOString();
     
     if(editUser){
-      const newUser = {...editUser, name, avatar};
-
-      dispatch({type: 'users/update_request'})
-
-      try {
-        await userAPI.updateUser(newUser)
-        dispatch({type: 'users/update_success', payload: newUser})
-      } catch (err) {
-        dispatch({type: 'users/update_error', payload: err})
-      }
+      dispatch(updateUser({...editUser, name, avatar}))
     }else{
-      dispatch({type: 'users/create_request'})
-
-      try {
-        const data = await userAPI.createUser({name, avatar, createdAt})
-        dispatch({type: 'users/create_success', payload: data})
-      } catch (err) {
-        dispatch({type: 'users/create_error', payload: err})
-      }
+      dispatch(createUser({name, avatar, createdAt}))
     }
 
     setEditUser(undefined)
