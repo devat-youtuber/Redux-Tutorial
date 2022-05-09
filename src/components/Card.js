@@ -1,12 +1,11 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteUser } from '../redux/thunks/userThunk'
 
 const Card = ({user, setEditUser}) => {
   const dispatch = useDispatch()
 
   const handleDelete = async (id) => {
-   dispatch(deleteUser(id))
+   dispatch({type: 'users/delete_request', payload: id})
   }
 
 

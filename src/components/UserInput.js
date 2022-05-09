@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { updateUser, createUser } from '../redux/thunks/userThunk'
 
 
 const UserInput = ({editUser, setEditUser}) => {
@@ -22,9 +21,11 @@ const UserInput = ({editUser, setEditUser}) => {
     const createdAt = new Date().toISOString();
     
     if(editUser){
-      dispatch(updateUser({...editUser, name, avatar}))
+      const newUser = {...editUser, name, avatar};
+      dispatch({type: 'users/update_request', payload: newUser})
     }else{
-      dispatch(createUser({name, avatar, createdAt}))
+      const newUser = {name, avatar, createdAt};
+      dispatch({type: 'users/create_request', payload: newUser})
     }
 
     setEditUser(undefined)
