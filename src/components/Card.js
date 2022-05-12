@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { deleteUser } from '../redux/thunks/userThunk'
+import { deleteUser } from '../redux/toolkits/userSlice'
 
 const Card = ({user, setEditUser}) => {
   const dispatch = useDispatch()

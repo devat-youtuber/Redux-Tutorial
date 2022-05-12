@@ -1,12 +1,20 @@
-import { createStore, applyMiddleware } from 'redux'
-import { composeWithDevTools } from 'redux-devtools-extension'
+import { configureStore } from "@reduxjs/toolkit";
+import userSlice from './toolkits/userSlice'
 
-import rootReducers from './reducers/rootReducer'
-import thunkMiddleware from 'redux-thunk'
+export const store = configureStore({
+  reducer: {
+    userState: userSlice
+  }
+})
+// import { createStore, applyMiddleware } from 'redux'
+// import { composeWithDevTools } from 'redux-devtools-extension'
 
-const middlewares = [thunkMiddleware];
-const middlewareEnhancers = applyMiddleware(...middlewares)
+// import rootReducers from './reducers/rootReducer'
+// import thunkMiddleware from 'redux-thunk'
 
-const composeEnhancers = composeWithDevTools(middlewareEnhancers)
+// const middlewares = [thunkMiddleware];
+// const middlewareEnhancers = applyMiddleware(...middlewares)
 
-export const store = createStore(rootReducers, composeEnhancers)
+// const composeEnhancers = composeWithDevTools(middlewareEnhancers)
+
+// export const store = createStore(rootReducers, composeEnhancers)
