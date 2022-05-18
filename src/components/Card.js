@@ -1,13 +1,8 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { deleteUser } from '../redux/toolkits/userSlice'
+import userQuery from '../redux/rtk-query/userQuery'
 
 const Card = ({user, setEditUser}) => {
-  const dispatch = useDispatch()
-
-  const handleDelete = async (id) => {
-   dispatch(deleteUser(id))
-  }
+  const [deleteUser, { isLoading }] = userQuery.useDeleteUserMutation()
 
 
   return (
@@ -17,8 +12,8 @@ const Card = ({user, setEditUser}) => {
       <div className='btn_nav'>
         <button className='btn_edit'
         onClick={() => setEditUser(user)}>Edit</button>
-        <button className='btn_delete'
-        onClick={() => handleDelete(user.id)}>Delete</button>
+        <button className='btn_delete' disabled={isLoading}
+        onClick={() => deleteUser(user.id)}>Delete</button>
       </div>
     </div>
   )

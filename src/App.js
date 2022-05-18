@@ -1,30 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react';
 import Card from './components/Card';
 import Spinner from './components/Spinner';
 import UserInput from './components/UserInput';
-import { getUsers } from './redux/toolkits/userSlice';
+import userQuery from './redux/rtk-query/userQuery';
 
 function App() {
   const [editUser, setEditUser] = useState()
+  // const id = '3232'
 
-  const {
-    data: users, loading, error
-  } = useSelector(state => state.userState)
-  
-  const dispatch = useDispatch()
-
-
-  useEffect(() => {
-    dispatch(getUsers())
-  }, [dispatch])
+  const { 
+    users, isLoading, error 
+  } = userQuery.useGetUsersQuery(undefined, {
+    // pollingInterval: 3000, //3000ms,
+    // skip: !id,
+    // refetchOnFocus: false,
+    selectFromResult: (result) => {
+      return {
+        ...result,
+        users: result.data ?? []
+      }
+    }
+  })
 
 
   return (
     <div className="wrap">
       <UserInput editUser={editUser} setEditUser={setEditUser} />
   
-      { error && <span>{error.message}</span> }
+      { error && <span>{JSON.stringify(error)}</span> }
 
       <div className='card_container'>
         {
@@ -36,7 +39,7 @@ function App() {
         }
       </div>
       
-      { loading && <Spinner /> }
+      { isLoading && <Spinner /> }
     </div>
   );
 }

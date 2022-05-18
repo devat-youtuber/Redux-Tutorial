@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import userQuery from "../rtk-query/userQuery";
 import * as userAPI from '../../api/userAPI'
 
 export const getUsers = createAsyncThunk(
@@ -41,7 +42,8 @@ export const deleteUser = createAsyncThunk(
 const initialState = {
   data: [],
   loading: false,
-  error: undefined
+  error: undefined,
+  token: 'myToken'
 }
 
 const userSlice = createSlice({
@@ -50,25 +52,16 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        (action) => {
-          return action.type.startsWith('users/') && action.type.endsWith('/pending')
-        },
+      .addMatcher(userQuery.endpoints.getUsers.matchPending,
         (state, action) => { state.loading = true }
       )
-      .addMatcher(
-        (action) => {
-          return action.type.startsWith('users/') && action.type.endsWith('/fulfilled')
-        },
+      .addMatcher(userQuery.endpoints.getUsers.matchFulfilled,
         (state, action) => { 
           state.loading = false;
           state.data = action.payload;
         }
       )
-      .addMatcher(
-        (action) => {
-          return action.type.startsWith('users/') && action.type.endsWith('/rejected')
-        },
+      .addMatcher(userQuery.endpoints.getUsers.matchRejected,
         (state, action) => { 
           state.loading = false;
           state.error = action.error;
