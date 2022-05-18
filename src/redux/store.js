@@ -5,13 +5,20 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 
 export const store = configureStore({
   reducer: {
+    // Regular slice.
     userState: userSlice,
+    // Create more slices from the api.
     [userQuery.reducerPath]: userQuery.reducer
   },
+  // Add configuration middleware to use functions of RTK Query such as caching, invalidation, polling, ...
   middleware: (gDM) => gDM().concat(userQuery.middleware) 
 })
 
+// A utility used to enable refetchOnFocus and refetchOnReconnect behaviors.
 setupListeners(store.dispatch)
+
+
+
 // import { createStore, applyMiddleware } from 'redux'
 // import { composeWithDevTools } from 'redux-devtools-extension'
 

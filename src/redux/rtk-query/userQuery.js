@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const userQuery = createApi({
+  // Similar to the Slice name when creating a regular Slice
   reducerPath: 'users',
+  // General configuration for all requests.
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:5000',
     prepareHeaders: (headers, { getState }) => {
@@ -14,6 +16,7 @@ const userQuery = createApi({
       return headers;
     }
   }),
+  // Endpoints (request functions)
   endpoints: (builder) => ({
     getUsers: builder.query({ // use + GetUsers + Query
       query: () => ({
@@ -24,7 +27,7 @@ const userQuery = createApi({
       // },
       // providesTags: ['Users']
     }),
-    createUser: builder.mutation({ // use + GetUsers + Query
+    createUser: builder.mutation({ // use + CreateUser + Mutation
       query: (newUser) => ({
         url: `/users`,
         method: 'POST',
@@ -43,7 +46,7 @@ const userQuery = createApi({
         )
       }
     }),
-    udapteUser: builder.mutation({ // use + GetUsers + Query
+    udapteUser: builder.mutation({ // use + UdapteUser + Mutation
       query: (newUser) => ({
         url: `/users/${newUser.id}`,
         method: 'PUT',
@@ -63,7 +66,7 @@ const userQuery = createApi({
         )
       }
     }),
-    deleteUser: builder.mutation({ // use + GetUsers + Query
+    deleteUser: builder.mutation({ // use + DeleteUser + Mutation
       query: (id) => ({
         url: `/users/${id}`,
         method: 'DELETE'
