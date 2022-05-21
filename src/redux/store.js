@@ -1,17 +1,45 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userSlice from './toolkits/userSlice'
+import themeSlice from './toolkits/themeSlice'
 import userQuery from "./rtk-query/userQuery";
 import { setupListeners } from '@reduxjs/toolkit/query'
+import { persistStore, persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage'
 
-export const store = configureStore({
-  reducer: {
-    userState: userSlice,
-    [userQuery.reducerPath]: userQuery.reducer
-  },
-  middleware: (gDM) => gDM().concat(userQuery.middleware) 
+const persistConfig = {
+  key: 'root',
+  storage,
+  // blacklist: ['users', 'userState'],
+  whitelist: ['themeState']
+}
+
+const usersPersistConfig = {
+  key: 'userState',
+  storage,
+  blacklist: ['data'],
+  // whitelist: ['token']
+}
+
+const reducers = combineReducers({
+  userState: persistReducer(usersPersistConfig, userSlice),
+  themeState: themeSlice,
+  [userQuery.reducerPath]: userQuery.reducer
 })
 
+const persistedReducer = persistReducer(persistConfig, reducers)
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (gDM) => gDM({
+    serializableCheck: false
+  }).concat(userQuery.middleware) 
+})
+
+export const persistor = persistStore(store);
+
 setupListeners(store.dispatch)
+
+
 // import { createStore, applyMiddleware } from 'redux'
 // import { composeWithDevTools } from 'redux-devtools-extension'
 

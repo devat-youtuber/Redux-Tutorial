@@ -13,6 +13,7 @@ const UserInput = ({editUser, setEditUser}) => {
 
   // const userSelector = userQuery.endpoints.getUsers.select()
   const users = useSelector(state => userSelector(state))
+  const { txtColor } = useSelector(state => state.themeState)
 
   console.log(users)
 
@@ -44,13 +45,15 @@ const UserInput = ({editUser, setEditUser}) => {
       <div className="input-group">
         <label htmlFor="name">Name</label>
         <input type="text" required value={name}
-        onChange={e => setName(e.target.value)} />
+        onChange={e => setName(e.target.value)}
+        style={{color: txtColor}} />
       </div>
 
       <div className="input-group">
         <label htmlFor="avatar">Avatar</label>
         <input type="text" required value={avatar}
-        onChange={e => setAvatar(e.target.value)} />
+        onChange={e => setAvatar(e.target.value)}
+        style={{color: txtColor}} />
       </div>
 
       <button type="submit" disabled={createLoading || updateLoading}>
